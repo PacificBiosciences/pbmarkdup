@@ -28,7 +28,7 @@ file extension: HiFi BAM (`.bam`); FASTQ (`.fastq`); FASTQ (`.fasta`);
 bgzipped FASTQ (`.fastq.gz`); bgzipped FASTA (`.fasta.gz`); or SMRT Link XML
 (`.consensusreadset.xml`) which also generates a corresponding BAM file.
 
-Run on a full movie:
+Run on a single movie:
 
     pbmarkdup movie.ccs.bam output.bam
 
@@ -41,6 +41,50 @@ Run on multiple movies and output duplicates in separate file
     pbmarkdup movie1.ccs.bam movie2.fastq uniq.fastq --dup-file dups.fasta
 
 ## FAQ
+
+### Does _pbmarkdup_ work on my CLR data?
+No. The purpose of this tool to mark PCR duplicates for amplicon HiFi libraries
+after CCS calling.
+
+### How are duplicates marked?
+Duplicates have annotated read names in FASTA and FASTQ; FASTA example
+
+    >m64013_191117_050515/67104/ccs DUPLICATE=m64013_191117_050515/3802014/ccs DS=2
+
+shows a marked duplicate read `m64013_191117_050515/67104/ccs` that is a duplicate
+of `m64013_191117_050515/3802014/ccs` and the this molecule has been sequenced
+`2` times. Accordingly, the read that has been selected as the representative
+of the molecule:
+
+    >m64013_191117_050515/3802014/ccs DS=2
+
+In BAM format, tags `ds:i:` provides the number of reads of this molecule and
+`du:Z:` the name of the representative read.
+
+### Can I print summary information
+Yes, use `--log-level INFO` and get following summary:
+
+```
+LIBRARY         READS    UNIQUE MOLECULES    DUPLICATE READS
+----------  ----------  ------------------  -----------------
+<Unnamed>        25000       24948 (99.8%)          52 (0.2%)
+SS-lib             496         493 (99.4%)           3 (0.6%)
+----------  ----------  ------------------  -----------------
+TOTAL            25496       25441 (99.8%)          55 (0.2%)
+```
+
+For each library, BAM `@RG` library tag `LB` or `<Unnamed>` for FASTA/Q input,
+number and percentages of unique and duplicate reads are listed per row.
+
+### Can I mark duplicates across different libraries?
+Use `--cross-library` to mark agnostic of library names.
+
+### Can I store duplicates in an extra file?
+Use `--dup-file FILE` to store duplicates in an extra file. The format of this
+file can be different to the output file.
+
+### Can I remove duplicates?
+Use `--rmdup`.
 
 ### Why are input files parsed twice?
 In order to keep memory footprint to a minimum, we trade reading input files
