@@ -42,6 +42,37 @@ Run on multiple movies and output duplicates in separate file
 
 ## FAQ
 
+### How does _pbmarkdup_ work?
+_pbmarkdup_ employs a reference-free HiFi comparison scheme to avoid biases
+from alignment-based methods.
+Naïve implementation would perform all-vs-all alignments to determine if two
+reads originate from the identical molecule and are only due to PCR duplication.
+This would be abysmally slow.
+Instead, _pbmarkdup_ relies on a hierarchical comparison workflow to rapidly
+detect reads that are likely from the same molecule.
+
+1) Compare each read to all reads that are smaller in length but at most 10 bp
+2) Check if their minimizers are similar
+3) Perform alignment of the first and last 250 bp in both directions
+4) Cluster reads and deterministically determine cluster representative
+
+Additional heuristics are employed to enable ultra-fast comparison.
+
+### How much memory is required?
+A low-memory footprint has been a primary focus of _pbmarkdup_. In order to
+enable rapid comparison of HiFi reads, all reads have to be stored in memory.
+As an example, a 20x human dataset would consume 60 GB memory just to store the
+sequences plus minimizers which can be a multiple, resulting in >200 GB memory
+consumption.\
+Alternatively, _pbmarkdup_ only stores the first and last 250 bp of each read
+with 2 byte/base and aggressively thins minimizers. This results in 8 GB memory
+for a 60 GB dataset (unreleased version 0.3.0).
+
+### Why are input files parsed twice?
+In order to keep memory footprint to a minimum, we trade reading input files
+twice instead of storing everything in memory. The goal was to support
+processing multiple movies with a standard server.
+
 ### Does _pbmarkdup_ work on my CLR data?
 No. The purpose of this tool to mark PCR duplicates for amplicon HiFi libraries
 after CCS calling.
@@ -86,11 +117,6 @@ file can be different to the output file.
 ### Can I remove duplicates?
 Use `--rmdup`.
 
-### Why are input files parsed twice?
-In order to keep memory footprint to a minimum, we trade reading input files
-twice instead of storing everything in memory. The goal was to support
-processing multiple movies with a standard server.
-
 ### What input / output combinations are allowed
 
 Input as rows, outputs as columns:
@@ -119,6 +145,8 @@ PacBio® tool _pbmarkdup_, distributed via Bioconda, is licensed under
 
 ## Changelog
 
+ * 0.3.0 (not yet release):
+   * Improve memory consumption
  * **0.2.0**:
    * Initial release
 
