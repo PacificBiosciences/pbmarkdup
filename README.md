@@ -16,7 +16,7 @@ Please refer to our [official pbbioconda page](https://github.com/PacificBioscie
 for information on Installation, Support, License, Copyright, and Disclaimer.
 
 ## Latest Version
-Version **1.0.0**: [Full changelog here](#changelog)
+Version **1.0.2**: [Full changelog here](#changelog)
 
 ## Execution
 **Input**: HiFi reads from one or multiples movies in PacBio BAM (`.ccs.bam`),
@@ -66,7 +66,7 @@ sequences plus minimizers which can be a multiple, resulting in >200 GB memory
 consumption.\
 Alternatively, _pbmarkdup_ only stores the first and last 250 bp of each read
 with 2 byte/base and aggressively thins minimizers. This results in 8 GB memory
-for a 60 GB dataset.
+for a 60 GB dataset (unreleased version 0.3.0).
 
 ### Why are input files parsed twice?
 In order to keep memory footprint to a minimum, we trade reading input files
@@ -145,7 +145,10 @@ PacBio® tool _pbmarkdup_, distributed via Bioconda, is licensed under
 
 ## Changelog
 
- * **1.0.0**:
+ * **1.0.2**:
+   * Official SMRT Link 10.0 release
+   * Minor internal fix in memory compression
+ * 1.0.0:
    * Official SMRT Link 9.0 release
    * Improve memory consumption
  * 0.2.0:
