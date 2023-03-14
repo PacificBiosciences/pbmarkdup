@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/pbmarkdup-logo.png" alt="CCS logo" width="200px"/>
+  <img src="img/pbmarkdup-logo.png" alt="pbmarkdup logo" width="200px"/>
 </p>
 <h1 align="center">pbmarkdup</h1>
 <p align="center">Mark duplicate reads from PacBio sequencing of an amplified library</p>
@@ -16,7 +16,7 @@ Please refer to our [official pbbioconda page](https://github.com/PacificBioscie
 for information on Installation, Support, License, Copyright, and Disclaimer.
 
 ## Latest Version
-Version **1.0.2**: [Full changelog here](#changelog)
+Version **1.0.3**: [Full changelog here](#changelog)
 
 ## Execution
 **Input**: HiFi reads from one or multiples movies in PacBio BAM (`.ccs.bam`),
@@ -145,7 +145,9 @@ PacBio® tool _pbmarkdup_, distributed via Bioconda, is licensed under
 
 ## Changelog
 
- * **1.0.2**:
+ * **1.0.3**:
+   * Revio release for SMRT Link 12.0
+ * 1.0.2:
    * Official SMRT Link 10.0 release
    * Minor internal fix in memory compression
  * 1.0.0:
