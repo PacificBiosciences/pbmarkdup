@@ -16,7 +16,7 @@ Please refer to our [official pbbioconda page](https://github.com/PacificBioscie
 for information on Installation, Support, License, Copyright, and Disclaimer.
 
 ## Latest Version
-Version **1.0.3**: [Full changelog here](#changelog)
+Version **1.1.0**: [Full changelog here](#changelog)
 
 ## Execution
 **Input**: HiFi reads from one or multiples movies in PacBio BAM (`.ccs.bam`),
@@ -145,7 +145,10 @@ PacBio® tool _pbmarkdup_, distributed via Bioconda, is licensed under
 
 ## Changelog
 
- * **1.0.3**:
+ * **1.1.0**:
+   * SMRT Link v25.1 release
+   * Use same tag syntax for FASTX as BAM
+ * 1.0.3:
    * Revio release for SMRT Link 12.0
  * 1.0.2:
    * Official SMRT Link 10.0 release
